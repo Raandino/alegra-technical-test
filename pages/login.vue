@@ -5,18 +5,16 @@
 </template>
 
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia' // import storeToRefs helper hook from pinia
-import { useAuthStore } from '~/store/auth' // import the auth store we just created
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from '~/store/auth'
+const { authenticateUser } = useAuthStore()
 
-const { authenticateUser } = useAuthStore() // use authenticateUser action from  auth store
-
-const { authenticated } = storeToRefs(useAuthStore()) // make authenticated state reactive with storeToRefs
+const { authenticated } = storeToRefs(useAuthStore())
 
 const router = useRouter()
 
 const login = async (user: { email: string; password: string }) => {
-    await authenticateUser(user) // call authenticateUser and pass the user object
-    // redirect to homepage if user is authenticated
+    await authenticateUser(user)
     if (authenticated) {
         router.push('/')
     }

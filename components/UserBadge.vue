@@ -7,15 +7,15 @@
             class="flex gap-2 h-full border-[1px] p-2 rounded-md cursor-pointer active:scale-105 duration-300"
             @click="toggleDropdown"
         >
-            <p class="font-roboto text-base text-gray-500">Rodolfo S.A</p>
+            <p class="font-roboto text-base text-gray-500">{{ company }}</p>
             <span class="size-6 bg-indigo-200 grid place-content-center rounded-full font-inter text-xs">R</span>
         </div>
 
         <div
-            v-if="isDropdownOpen"
+            v-show="isDropdownOpen"
             class="absolute mt-2 right-0 bg-white border rounded-2xl shadow-lg flex flex-col w-72"
         >
-            <p class="text-xs px-4 font-inter py-4 text-neutral-500 border-b border-gray-300">rodolfo@raandino.dev</p>
+            <p class="text-xs px-4 font-inter py-4 text-neutral-500 border-b border-gray-300">{{ userEmail }}</p>
 
             <nav class="flex flex-col">
                 <a
@@ -26,7 +26,7 @@
                     <div class="flex gap-2 items-center h-full">
                         <Icon
                             name="mdi:chart-bar"
-                            class="text-[#6b7280]"
+                            class="text-[#6b7280] size-4"
                         />
                         <p class="text-sm font-roboto font-light text-neutral-40">Consumo del plan</p>
                     </div>
@@ -43,13 +43,13 @@
                     <div class="flex gap-2 items-center h-full">
                         <Icon
                             name="mdi:account"
-                            class="text-[#6b7280]"
+                            class="text-[#6b7280] size-4"
                         />
                         <p class="text-sm font-roboto font-light text-neutral-40">Mi Perfil</p>
                     </div>
                     <Icon
                         name="material-symbols-light:arrow-insert-rounded"
-                        class="text-[#6b7280] rotate-90"
+                        class="text-[#6b7280] rotate-90 size-4"
                     />
                 </a>
                 <a
@@ -60,7 +60,7 @@
                     <div class="flex gap-2 items-center h-full">
                         <Icon
                             name="mdi:lock"
-                            class="text-[#6b7280]"
+                            class="text-[#6b7280] size-4"
                         />
                         <p class="text-sm font-roboto font-light text-neutral-40">Seguridad</p>
                     </div>
@@ -89,7 +89,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useAuthStore } from '~/store/auth'
 
-const { logUserOut } = useAuthStore()
+const { logUserOut, userEmail, company } = useAuthStore()
 
 const isDropdownOpen = ref(false)
 const dropdownContainer = ref<HTMLElement | null>(null)

@@ -1,49 +1,56 @@
 import { defineStore } from 'pinia'
-import { navigateTo } from 'nuxt/app'
+import { ref } from 'vue'
+import { useCookie } from 'nuxt/app'
 
 interface UserPayloadInterface {
     email: string
     password: string
 }
 
-export const useAuthStore = defineStore('auth', {
-    state: () => ({
-        authenticated: false,
-        loading: false,
-        company: '',
-    }),
-    actions: {
-        async authenticateUser({ email, password }: UserPayloadInterface) {
-            this.loading = true
-            // useFetch from nuxt 3
-            const { data, pending }: any = await useFetch(
-                'https://api.alegra.com/api/v1/login?fields=user,company,company_dictionary,origin',
-                {
-                    method: 'post',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: {
-                        email,
-                        password,
-                    },
-                }
-            )
-            this.loading = pending
+export const useAuthStore = defineStore('auth', () => {
+    const loading = ref(false)
+    const token = useCookie('token')
+    const authenticated = useCookie('authenticated', { default: () => false })
+    const company = useCookie('company', { default: () => '' })
+    const userEmail = useCookie('userEmail', { default: () => '' })
 
-            if (data.value) {
-                const token = useCookie('token')
-                token.value = data?.value?.token
-                this.authenticated = true
-                this.company = data?.value?.company?.name
-            }
-        },
-        logUserOut() {
-            const token = useCookie('token')
+    const authenticateUser = async ({ email, password }: UserPayloadInterface) => {
+        loading.value = true
 
-            // Clear authentication and token
-            this.authenticated = false
-            token.value = null
+        const { data, pending }: any = await useFetch(`api/login?fields=user,company,company_dictionary,origin`, {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: {
+                email,
+                password,
+            },
+        })
+        loading.value = false
 
-            navigateTo('/login')
-        },
-    },
+        if (data.value) {
+            userEmail.value = data?.value?.user?.email
+            token.value = data?.value?.token
+            authenticated.value = true
+            company.value = data?.value?.company?.name
+        }
+    }
+
+    const logUserOut = () => {
+        token.value = null
+        authenticated.value = false
+        loading.value = false
+        company.value = ''
+        userEmail.value = ''
+
+        navigateTo('/login')
+    }
+
+    return {
+        authenticated,
+        loading,
+        company,
+        authenticateUser,
+        logUserOut,
+        userEmail,
+    }
 })
