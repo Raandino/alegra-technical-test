@@ -1,34 +1,32 @@
 import { defineStore } from 'pinia'
-import type { Seller } from '~/types/sellers'
-import base64 from 'base-64'
+import type { Seller } from '~/types/alegra'
 import { useAuthStore } from '~/store/auth'
 
 export const useSellersStore = defineStore('sellers', () => {
     const sellers = ref<Seller[]>([])
-    const token = useCookie('token')
+    const { encodeCredentials } = useAuthStore()
 
-    const getSellers = async () => {
-        const { userEmail } = useAuthStore()
-        const access = base64.encode(`${userEmail}:${token.value}`)
-        const { data, pending, error }: any = await useFetch(`api/sellers`, {
-            method: 'GET',
-            headers: {
-                accept: 'application/json',
-                Authorization: `Basic ${access}`,
-                mode: 'no-cors',
-            },
-        })
-        if (data.value) {
-            sellers.value = data.value
+    const fetchSellers = async () => {
+        try {
+            const access = encodeCredentials()
+            const data = await $fetch<Seller[]>('api/sellers', {
+                method: 'GET',
+                headers: {
+                    accept: 'application/json',
+                    Authorization: `Basic ${access}`,
+                },
+            })
+            sellers.value = data
             console.log(sellers.value)
-        }
-        if (error.value) {
-            console.error('Error fetching sellers:', error.value)
+        } catch (error) {
+            console.error('Error fetching sellers:', error)
         }
     }
+    const allSellers = computed(() => sellers.value)
 
     return {
         sellers,
-        getSellers,
+        fetchSellers,
+        allSellers,
     }
 })

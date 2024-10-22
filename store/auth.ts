@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
-import { useCookie } from 'nuxt/app'
+import base64 from 'base-64'
+import type { AuthResponse } from '~/types/alegra'
 
 interface UserPayloadInterface {
     email: string
@@ -15,24 +15,34 @@ export const useAuthStore = defineStore('auth', () => {
     const userEmail = useCookie('userEmail', { default: () => '' })
 
     const authenticateUser = async ({ email, password }: UserPayloadInterface) => {
-        loading.value = true
+        try {
+            loading.value = true
 
-        const { data, pending }: any = await useFetch(`api/login?fields=user,company,company_dictionary,origin`, {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: {
-                email,
-                password,
-            },
-        })
-        loading.value = false
+            const data: AuthResponse = await $fetch('api/login?fields=user,company,company_dictionary,origin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: {
+                    email,
+                    password,
+                },
+            })
 
-        if (data.value) {
-            userEmail.value = data?.value?.user?.email
-            token.value = data?.value?.token
-            authenticated.value = true
-            company.value = data?.value?.company?.name
+            if (data) {
+                userEmail.value = data?.user?.email
+                token.value = data?.token
+                authenticated.value = true
+                company.value = data?.company?.name
+            }
+        } catch (error) {
+            console.error('Error authenticating user:', error)
+        } finally {
+            loading.value = false
         }
+    }
+
+    const encodeCredentials = () => {
+        const { userEmail, token } = useAuthStore()
+        return base64.encode(`${userEmail}:${token}`)
     }
 
     const logUserOut = () => {
@@ -52,5 +62,7 @@ export const useAuthStore = defineStore('auth', () => {
         authenticateUser,
         logUserOut,
         userEmail,
+        token,
+        encodeCredentials,
     }
 })

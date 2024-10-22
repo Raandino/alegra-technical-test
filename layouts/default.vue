@@ -1,10 +1,13 @@
 <template>
     <main :class="`overflow-hidden relative w-full h-dvh md:h-screen  ${authenticated ? 'bg-neutral-10' : 'bg-white'}`">
+        <LoaderComponent />
         <HeaderComponent v-if="authenticated" />
 
-        <div class="pt-[96px] md:pt-[104px] lg:pt-[110px]">
+        <div class="pt-[60px]">
             <slot />
         </div>
+
+        <FooterComponent v-if="authenticated" />
     </main>
 </template>
 
