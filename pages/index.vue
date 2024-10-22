@@ -97,8 +97,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-// TODO: Move pexels api to .wnv variables
-const client = createClient('fni50KCbqv41v9ZN3EKr9RCNtbTfKGLXGn0tCNo5EAw9BpqNTlCrCEXg')
+const client = useRuntimeConfig().pexelsApi
 
 const sellersStore = useSellersStore()
 

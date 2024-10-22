@@ -11,6 +11,7 @@ export default defineNuxtConfig({
         apiUrl: process.env.API_URL,
         public: {
             apiUrl: process.env.API_URL,
+            pexelsApi: process.env.PEXELS_API_URL,
         },
     },
 })

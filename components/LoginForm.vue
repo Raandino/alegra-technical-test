@@ -62,8 +62,8 @@ const props = defineProps<{
 }>()
 
 const formData = ref({
-    email: 'rodolfo@raandino.dev',
-    password: 'AlegraDemo2024!',
+    email: '',
+    password: '',
 })
 
 const inputClasses =
