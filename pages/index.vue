@@ -96,7 +96,7 @@ import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const pexelsApi = useRuntimeConfig().pexelsApi as string
+const pexelsApi = useRuntimeConfig().public.pexelsApi as string
 const client = createClient(pexelsApi)
 
 const sellersStore = useSellersStore()
