@@ -89,7 +89,7 @@
 <script setup lang="ts">
 import { useSellersStore } from '~/store/sellers'
 import { useItemsStore } from '~/store/items'
-import { debounce } from 'lodash'
+import debounce from 'lodash/debounce'
 import { createClient } from 'pexels'
 import type { Photo } from '~/types/pexels'
 import { storeToRefs } from 'pinia'
