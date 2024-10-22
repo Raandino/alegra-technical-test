@@ -16,7 +16,7 @@ const router = useRouter()
 const login = async (user: { email: string; password: string }) => {
     await authenticateUser(user)
     if (authenticated) {
-        router.push('/index')
+        router.push('/')
     }
 }
 </script>

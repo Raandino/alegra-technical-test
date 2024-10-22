@@ -8,6 +8,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
     if (!hasTwentyPoints) {
         abortNavigation()
-        return navigateTo('/index')
+        return navigateTo('/')
     }
 })
