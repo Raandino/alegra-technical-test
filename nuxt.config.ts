@@ -10,6 +10,8 @@ export default defineNuxtConfig({
     runtimeConfig: {
         apiUrl: process.env.API_URL,
         public: {
+            pointsToWin: process.env.POINTS_TO_WIN,
+            incrementPerPoints: process.env.INCREMENTS_PER_POINT,
             apiUrl: process.env.API_URL,
             pexelsApi: process.env.PEXELS_API_URL,
         },

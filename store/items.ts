@@ -6,6 +6,7 @@ import { useSellersStore } from '~/store/sellers'
 export const useItemsStore = defineStore('items', () => {
     const items = ref<Item[]>([])
     const isLoading = ref(false)
+    const pointsIncrements = parseInt(useRuntimeConfig().public.incrementPerPoints as string)
 
     const { encodeCredentials } = useAuthStore()
 
@@ -51,7 +52,7 @@ export const useItemsStore = defineStore('items', () => {
             const seller = sellerStore.sellers.find((s) => s.id === sellerId)
             if (seller) {
                 seller.points = seller.points || 0
-                seller.points += 5
+                seller.points += pointsIncrements
             }
 
             items.value.push({ ...data, sellerId })

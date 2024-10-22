@@ -6,15 +6,15 @@
         <div
             v-for="(seller, index) in allSellers"
             :key="index"
-            class="w-[80px] truncate"
+            class="w-[90px] truncate"
         >
             <span class="text-xs">{{ seller.name }}</span>
-            <div class="flex bg-primary-500 shadow-lg rounded-lg p-2 items-center gap-1 x">
+            <div class="flex bg-primary-500 shadow-lg rounded-lg p-2 items-center gap-1 justify-center">
                 <Icon
                     name="material-symbols:account-circle"
                     class="text-black md:text-2xl shadow-2xl"
                 />
-                <p>{{ seller.points || 0 }} / 20</p>
+                <p>{{ seller.points || 0 }} / {{ pointsToWin }}</p>
             </div>
         </div>
     </footer>
@@ -27,6 +27,8 @@ import { storeToRefs } from 'pinia'
 const sellersStore = useSellersStore()
 
 const { allSellers } = storeToRefs(sellersStore)
+
+const pointsToWin = parseInt(useRuntimeConfig().public.pointsToWin as string)
 
 const hasTwentyPoints = computed(() => {
     return allSellers.value.some((seller) => (seller.points ?? 0) >= 20)

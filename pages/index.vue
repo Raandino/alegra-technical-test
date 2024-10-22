@@ -82,7 +82,6 @@ const handleClick = async (name: string, price: number, description: string, sel
     }
 }
 
-//TODO: Add empty state when there are no images or when there are less than 3
 const fetchImages = async (searchQuery: string, numImages: number) => {
     try {
         loading.value = true
