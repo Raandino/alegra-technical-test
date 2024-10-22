@@ -27,6 +27,7 @@
     "@types/base-64": "^1.0.2"
   },
   "overrides": {
+    "vue-tsc": "2.0.29",
     "vue": "latest"
   }
 }
