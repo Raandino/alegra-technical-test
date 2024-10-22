@@ -17,31 +17,12 @@
                     favorita!
                 </span>
             </h1>
-            <div class="flex relative">
-                <input
-                    v-model="query"
-                    type="text"
-                    placeholder="Busca Imagenes..."
-                    :class="`w-full p-3 md:p-4 rounded-full shadow-lg text-base md:text-lg duration-300 focus:outline-none focus:ring-2 focus:ring-primary-500 font-roboto text-neutral-40 ${
-                        hasSearched && query != '' ? 'ring-primary-500 ring-2 ' : ''
-                    }`"
-                />
-
-                <div
-                    class="bg-primary-500 size-7 md:size-10 absolute right-3 top-1/2 -translate-y-1/2 rounded-full grid place-content-center"
-                >
-                    <Icon
-                        v-if="loading && hasSearched"
-                        name="svg-spinners:90-ring-with-bg"
-                        class="text-white md:text-2xl"
-                    />
-                    <Icon
-                        v-else
-                        name="mdi:magnify"
-                        class="bg-white text-xl md:text-2xl"
-                    />
-                </div>
-            </div>
+            <SearchBarComponent
+                :query="query"
+                :has-searched="hasSearched"
+                :loading="loading"
+                @update:query="query = $event"
+            />
         </div>
         <div
             v-if="hasSearched"
@@ -54,34 +35,12 @@
                 class="w-full h-[132px] md:h-[300px] bg-gray-300 rounded-lg animate-pulse"
             />
 
-            <article
-                v-else
-                v-for="(image, index) in images"
-                :key="`loaded-${index}`"
-                class="relative flex flex-col justify-end overflow-hidden rounded-2xl px-5 pb-5 pt-28 w-full mx-auto duration-300 hover:scale-105 active:scale-110 h-24 md:h-[300px] shadow-md cursor-pointer"
-                @click="
-                    handleClick(
-                        `Fotografia por ${image.photographer}`,
-                        generateRandomPrice(),
-                        image.alt || 'Imagen de Pexels',
-                        allSellers[index].id
-                    )
-                "
-            >
-                <img
-                    class="absolute inset-0 h-full w-full object-cover"
-                    :src="image.url"
-                    :alt="image.alt || 'Texto Alternativo Imagen'"
-                />
-
-                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
-                <h3 class="z-10 mt-3 text-base md:text-xl font-roboto font-semibold text-white leading-5">
-                    {{ allSellers[index].name }}
-                </h3>
-                <div class="z-10 gap-y-1 overflow-hidden text-sm leading-6 text-gray-300">
-                    {{ allSellers[index].observations || 'No description available' }}
-                </div>
-            </article>
+            <CardComponent
+                :is-loading="loading"
+                :images="images"
+                :all-sellers="allSellers"
+                :handle-click="handleClick"
+            />
         </div>
     </div>
 </template>
@@ -107,9 +66,6 @@ const images = ref<Photo[]>([])
 const loading = ref(false)
 const hasSearched = computed(() => query.value.length > 0)
 
-const generateRandomPrice = () => {
-    return Math.floor(Math.random() * (200 - 100 + 1)) + 100
-}
 const handleClick = async (name: string, price: number, description: string, sellerId: number) => {
     const itemToCreate = {
         name,
@@ -126,7 +82,7 @@ const handleClick = async (name: string, price: number, description: string, sel
     }
 }
 
-//TODO: Add empty state when there are no images
+//TODO: Add empty state when there are no images or when there are less than 3
 const fetchImages = async (searchQuery: string, numImages: number) => {
     try {
         loading.value = true
