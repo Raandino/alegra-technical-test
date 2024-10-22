@@ -1,7 +1,8 @@
 import { useAuthStore } from '~/store/auth'
 
-export default defineNuxtRouteMiddleware((to) => {
-    const { authenticated } = storeToRefs(useAuthStore())
+export default defineNuxtRouteMiddleware((to, from) => {
+    const authStore = useAuthStore()
+    const { authenticated } = storeToRefs(authStore)
 
     const token = useCookie('token')
 
@@ -10,7 +11,7 @@ export default defineNuxtRouteMiddleware((to) => {
     }
 
     if (token.value && to?.name === 'login') {
-        return navigateTo('/')
+        return navigateTo('/index')
     }
 
     if (!token.value && to?.name !== 'login') {
