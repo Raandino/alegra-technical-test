@@ -89,15 +89,12 @@
 <script setup lang="ts">
 import { useSellersStore } from '~/store/sellers'
 import { useItemsStore } from '~/store/items'
-import debounce from 'lodash/debounce'
-import { createClient } from 'pexels'
-import type { Photo } from '~/types/pexels'
+import _ from 'lodash'
+import type { Photo, FetchImagesResponse } from '~/types/pexels'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const pexelsApi = useRuntimeConfig().public.pexelsApi as string
-const client = createClient(pexelsApi)
 
 const sellersStore = useSellersStore()
 
@@ -131,36 +128,37 @@ const handleClick = async (name: string, price: number, description: string, sel
 
 //TODO: Add empty state when there are no images
 const fetchImages = async (searchQuery: string, numImages: number) => {
-    loading.value = true
     try {
-        const response = await client.photos.search({
-            query: searchQuery,
-            per_page: numImages,
-            page: 1,
-            locale: 'es-ES',
-            orientation: 'landscape',
-        })
+        loading.value = true
 
-        if ('photos' in response) {
-            images.value = response.photos.map((photo) => ({
+        const { data } = await useFetch<FetchImagesResponse>('https://api.pexels.com/v1/search', {
+            params: {
+                query: searchQuery,
+                per_page: numImages,
+                page: 1,
+                locale: 'es-ES',
+                orientation: 'landscape',
+            },
+            headers: {
+                Authorization: `${useRuntimeConfig().public.pexelsApi}`,
+            },
+        })
+        if (data.value && data.value.photos) {
+            images.value = data.value.photos.map((photo) => ({
                 id: photo.id,
-                url: photo.src.medium,
+                url: photo.src?.medium,
                 alt: photo.alt,
                 photographer: photo.photographer,
             }))
-        } else {
-            console.error('Error response from Pexels:', response)
-            images.value = []
         }
     } catch (error) {
         console.error('Error fetching images:', error)
-        images.value = []
     } finally {
         loading.value = false
     }
 }
 
-const debouncedFetchImages = debounce((newQuery, numImages) => {
+const debouncedFetchImages = _.debounce((newQuery, numImages) => {
     if (newQuery) {
         fetchImages(newQuery, numImages)
     } else {

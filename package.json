@@ -17,7 +17,7 @@
     "base-64": "^1.0.0",
     "lodash": "^4.17.21",
     "nuxt": "^3.13.0",
-    "pexels": "^1.4.0",
+
     "pinia": "^2.2.4",
     "vue": "latest",
     "vue-router": "latest"
@@ -25,9 +25,5 @@
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@types/base-64": "^1.0.2"
-  },
-  "overrides": {
-    "vue-tsc": "2.0.29",
-    "vue": "latest"
   }
 }

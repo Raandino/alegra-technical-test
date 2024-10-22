@@ -39,6 +39,9 @@ export const useAuthStore = defineStore('auth', () => {
             loading.value = false
         }
     }
+    const setAuthenticated = (newState: boolean) => {
+        authenticated.value = newState
+    }
 
     const encodeCredentials = () => {
         const { userEmail, token } = useAuthStore()
@@ -64,5 +67,6 @@ export const useAuthStore = defineStore('auth', () => {
         userEmail,
         token,
         encodeCredentials,
+        setAuthenticated,
     }
 })

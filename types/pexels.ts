@@ -1,14 +1,12 @@
 export interface Photo {
-    id: number
+    id?: number
     width?: number
     height?: number
-    url: string
-    alt: string | null
-    avg_color?: string | null
+    url?: string
     photographer?: string
     photographer_url?: string
     photographer_id?: number
-    liked?: boolean
+    avg_color?: string
     src?: {
         original: string
         large2x: string
@@ -19,4 +17,14 @@ export interface Photo {
         landscape: string
         tiny: string
     }
+    liked?: boolean
+    alt?: string
+}
+
+export interface FetchImagesResponse {
+    page?: number
+    per_page?: number
+    photos?: Photo[]
+    total_results?: number
+    next_page?: string
 }
