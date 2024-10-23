@@ -1,4 +1,5 @@
 # Allegra Technical Test
+![Cover Photo](https://github.com/Raandino/alegra-technical-test/blob/main/assets/images/githubcover.png?raw=true)
 
 ## Table of Contents
 - [Project Overview](#project-overview)
@@ -11,14 +12,13 @@
 - [License](#license)
 
 ## Project Overview
-This project is a technical test designed for **Allegra** to evaluate my proficiency with the **Vue.js** framework. The application showcases a range of functionalities utilizing **Knox 3** for routing, **Pima** for state management, and middleware for authentication and application state management. 
+This project is a technical test designed for **Allegra** to evaluate my proficiency with the **Vue.js** framework. The application showcases a range of functionalities utilizing **Nuxt 3** for routing, **Pinia** for state management, and middleware for authentication and application state management. 
 
 The application connects with the **Allegra API** to provide a seamless user experience, allowing for dynamic interactions and features.
 
 ## Technologies Used
-- **Framework**: Vue.js
-- **Routing**: Knox 3
-- **State Management**: Pima
+- **Framework**: Nuxt 3 (Vue.js)
+- **State Management**: Pinia
 - **API Integration**: Allegra API, Pexel API
 - **Versioning**: Standard Versioning for changelog documentation
 - **Deployment**: Vercel
@@ -33,8 +33,6 @@ The application connects with the **Allegra API** to provide a seamless user exp
 - **Responsive Design**: The application is fully responsive, ensuring a seamless experience across devices.
 - **UI Consistency**: The design closely resembles the Allegra UI kit, including colors, typography, and icons, providing a familiar interface for users.
 
-## Installation
-To get started with this project, follow these steps:
 ## Installation
 To get started with this project, follow these steps:
 1. Clone the repository:
