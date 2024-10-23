@@ -14,7 +14,7 @@
         "
     >
         <img
-            class="absolute inset-0 h-full w-full object-cover"
+            class="absolute inset-0 h-full w-full object-cover   object"
             :src="image.url"
             :alt="image.alt || 'Texto Alternativo Imagen'"
         />

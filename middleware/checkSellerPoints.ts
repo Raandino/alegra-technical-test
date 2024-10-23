@@ -1,16 +1,33 @@
 import { useSellersStore } from '~/store/sellers'
+import { useItemsStore } from '~/store/items'
 
-export default defineNuxtRouteMiddleware((to, from) => {
-    const { allSellers } = useSellersStore()
+export default defineNuxtRouteMiddleware(async (to, from) => {
+    const sellersStore = useSellersStore()
+    const itemsStore = useItemsStore()
+
+    sellersStore.allSellers
+    itemsStore.items
 
     const pointsToWin = parseInt(useRuntimeConfig().public.pointsToWin as string)
 
-    const hasTwentyPoints = allSellers.some((seller) => (seller.points ?? 0) >= pointsToWin)
+    const seller = sellersStore.sellers.find((seller) => (seller.points ?? 0) >= pointsToWin)
 
-    if (!hasTwentyPoints) {
+    if (!seller) {
         abortNavigation()
         return navigateTo('/')
     }
 
-    console.log('Create Invoice now!')
+    const clientId = 1
+    const sellerId = seller.id
+    const items = itemsStore.items
+    const dueDate = new Date().toISOString().split('T')[0]
+    const date = new Date().toISOString().split('T')[0]
+
+    try {
+        await itemsStore.createInvoice(clientId, sellerId, items, dueDate, date)
+    } catch (error) {
+        console.error('Error creating invoice:', error)
+        abortNavigation()
+        return navigateTo('/error')
+    }
 })

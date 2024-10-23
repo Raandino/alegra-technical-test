@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
-import type { Item } from '~/types/alegra'
+import type { Item, Invoice } from '~/types/alegra'
 import { useAuthStore } from '~/store/auth'
 import { useSellersStore } from '~/store/sellers'
+import { useInvoiceStore } from '~/store/invoice'
 
 export const useItemsStore = defineStore('items', () => {
     const items = ref<Item[]>([])
@@ -9,10 +10,11 @@ export const useItemsStore = defineStore('items', () => {
     const pointsIncrements = parseInt(useRuntimeConfig().public.incrementPerPoints as string)
 
     const { encodeCredentials } = useAuthStore()
+    const { setInvoice } = useInvoiceStore()
+    const access = encodeCredentials()
 
     const getItems = async () => {
         try {
-            const access = encodeCredentials()
             const data = await $fetch('api/items', {
                 method: 'GET',
                 headers: {
@@ -62,13 +64,47 @@ export const useItemsStore = defineStore('items', () => {
         }
     }
 
-    const generateInvoice = (sellerId: number) => {
-        debugger
-        items.value.forEach((item) => {
-            console.log(item)
-        })
-        const sellerItems = items.value.filter((item) => item.sellerId === sellerId)
-        console.table(sellerItems)
+    const createInvoice = async (clientId: number, sellerId: number, items: Item[], dueDate: string, date: string) => {
+        isLoading.value = true
+        try {
+            const access = encodeCredentials()
+
+            const invoiceItems = items.map((item) => ({
+                id: item.id,
+                name: item.name,
+                price: item.price![0].price,
+                quantity: 1,
+                description: item.description,
+            }))
+
+            const invoiceData = {
+                client: {
+                    id: clientId,
+                },
+                status: 'open',
+                items: invoiceItems,
+                dueDate: dueDate,
+                date: date,
+                seller: sellerId,
+            }
+
+            const data = await $fetch('api/invoices', {
+                method: 'POST',
+                headers: {
+                    accept: 'application/json',
+                    Authorization: `Basic ${access}`,
+                },
+                body: JSON.stringify(invoiceData),
+            })
+
+            console.log('Invoice created:', data)
+            isLoading.value = false
+            setInvoice(data as Invoice)
+        } catch (error) {
+            console.error('Error creating invoice:', error)
+            isLoading.value = false
+            throw error
+        }
     }
 
     return {
@@ -76,6 +112,6 @@ export const useItemsStore = defineStore('items', () => {
         getItems,
         createItem,
         isLoading,
-        generateInvoice,
+        createInvoice,
     }
 })
