@@ -3,7 +3,7 @@
         v-if="!isLoading && findResults"
         v-for="(image, index) in images"
         :key="`loaded-${index}`"
-        class="relative flex flex-col justify-end overflow-hidden rounded-2xl px-5 pb-5 pt-28 w-full mx-auto duration-300 hover:scale-105 active:scale-110 h-[250px] md:h-[300px] shadow-md cursor-pointer"
+        class="relative flex flex-col justify-end overflow-hidden rounded-2xl px-5 pb-5 pt-28 w-full mx-auto duration-300 hover:scale-105 active:scale-110 h-[180px] sm:h-[200] md:h-[300px] shadow-md cursor-pointer"
         @click="
             handleClick(
                 `Fotografia por ${image.photographer}`,
