@@ -2,14 +2,14 @@
   "name": "nuxt-app",
   "private": true,
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-      "release": "standard-version"
+    "release": "standard-version"
   },
   "dependencies": {
     "@nuxt/icon": "^1.5.6",
