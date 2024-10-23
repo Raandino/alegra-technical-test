@@ -1,4 +1,10 @@
 <template>
+    <ConfettiExplosion
+        :particleCount="200"
+        :force="0.3"
+        :stageHeight="1500"
+        :stageWith="1500"
+    />
     <section class="bg-white px-4 md:px-10 py-10 flex flex-col items-center m-5 rounded-lg shadow-lg">
         <header class="font-inter text-xl text-neutral-40 flex justify-between w-full">
             <p>{{ company }}</p>
@@ -46,6 +52,8 @@
 import { useInvoiceStore } from '~/store/invoice'
 import { useAuthStore } from '~/store/auth'
 import { storeToRefs } from 'pinia'
+import ConfettiExplosion from 'vue-confetti-explosion'
+
 definePageMeta({
     middleware: 'check-seller-points',
 })

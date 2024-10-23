@@ -6,6 +6,17 @@ export default defineNuxtConfig({
     css: ['~/assets/css/fonts.css'],
     app: {
         pageTransition: { name: 'page', mode: 'out-in' },
+        head: {
+            title: '▷ Superpoderes para tu negocio | Alegra.com',
+            meta: [
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content:
+                        'Alegra es la plataforma en la nube con soluciones para ☝ administrar tu negocio, facturar electrónicamente y vender en línea. ✓ Empieza GRATIS',
+                },
+            ],
+        },
     },
     runtimeConfig: {
         apiUrl: process.env.API_URL,

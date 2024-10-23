@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white rounded-lg mt-4 max-h-[300px] overflow-y-scroll">
+    <div class="bg-white rounded-lg mt-4 max-h-[200px] md:max-h-[300px] overflow-y-scroll">
         <div>
             <table class="w-full">
                 <thead class="hidden md:table-header-group">
