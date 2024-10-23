@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/Raandino/alegra-technical-test/compare/v0.1.0...v0.1.1) (2024-10-23)
+
+
+### Bug Fixes
+
+* **Cards:** change height for phones ([f0d891d](https://github.com/Raandino/alegra-technical-test/commit/f0d891dcc6364987c44ddfd77858d6fa00158b15))
+* **Logout:** Not logging out from /checkout page ([97a254b](https://github.com/Raandino/alegra-technical-test/commit/97a254b608e5dee4b595792b3d5a9f0b7a671b58))
+
 ## 0.1.0 (2024-10-23)
 
 
