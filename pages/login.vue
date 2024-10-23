@@ -9,6 +9,10 @@ import { storeToRefs } from 'pinia'
 import { useAuthStore } from '~/store/auth'
 const { authenticateUser } = useAuthStore()
 
+definePageMeta({
+    middleware: 'logout-from-invoice',
+})
+
 const { authenticated } = storeToRefs(useAuthStore())
 
 const router = useRouter()
