@@ -3,7 +3,7 @@
         v-if="!isLoading && findResults"
         v-for="(image, index) in images"
         :key="`loaded-${index}`"
-        class="relative flex flex-col justify-end overflow-hidden rounded-2xl px-5 pb-5 pt-28 w-full mx-auto duration-300 hover:scale-105 active:scale-110 h-24 md:h-[300px] shadow-md cursor-pointer"
+        class="relative flex flex-col justify-end overflow-hidden rounded-2xl px-5 pb-5 pt-28 w-full mx-auto duration-300 hover:scale-105 active:scale-110 h-[250px] md:h-[300px] shadow-md cursor-pointer"
         @click="
             handleClick(
                 `Fotografia por ${image.photographer}`,
@@ -14,7 +14,7 @@
         "
     >
         <img
-            class="absolute inset-0 h-full w-full object-cover   object"
+            class="absolute inset-0 h-full w-full object-cover"
             :src="image.url"
             :alt="image.alt || 'Texto Alternativo Imagen'"
         />
@@ -39,7 +39,7 @@
                 class="text-white md:text-2xl "
             />
         </footer>
-        <div class="z-10 gap-y-1 overflow-hidden text-sm leading-6 text-gray-300">
+        <div class="z-10 gap-y-1 overflow-hidden text-sm leading-6 text-gray-300 hidden md:block">
             {{ allSellers[index].observations || 'No description available' }}
         </div>
     </article>
