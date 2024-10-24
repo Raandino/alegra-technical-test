@@ -16,7 +16,11 @@ export const useSellersStore = defineStore('sellers', () => {
                     Authorization: `Basic ${access}`,
                 },
             })
-            sellers.value = data
+
+            const activeSellers = data.filter((seller) => {
+                return seller.status == 'active'
+            })
+            sellers.value = activeSellers
             console.log(sellers.value)
         } catch (error) {
             console.error('Error fetching sellers:', error)
