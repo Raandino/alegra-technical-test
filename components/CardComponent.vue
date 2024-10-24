@@ -58,7 +58,7 @@ const props = defineProps<{
 }>()
 
 const findResults = computed(() => {
-    return props.images.length >= 3
+    return props.images.length >= 1
 })
 
 const progressBar = (points: number) => {
