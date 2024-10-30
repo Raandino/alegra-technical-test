@@ -58,7 +58,7 @@ npm run dev
 Once the development server is running, open your browser and navigate to `http://localhost:3000`. You can interact with the application to test the various features implemented.
 
 ## Changelog
-All changes and updates to the project are documented in the [CHANGELOG.md](changelog.md) file, following the standard versioning format.
+All changes and updates to the project are documented in the [CHANGELOG.md](CHANGELOG.md) file, following the standard versioning format.
 
 ## Deployment
 This application is deployed on **Vercel** under a custom domain. You can access the live version of the application [here](https://alegra.raandino.dev/).
